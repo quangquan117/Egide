@@ -2,7 +2,7 @@
     include_once "user.php";
 
     if (strpos($_SERVER["REQUEST_URI"], "/new_user") !== false){
-        
+
         $data = json_decode(file_get_contents("php://input"), true);
 
         if (isset($data["username"]) && isset($data["email"]) && isset($data["password"])) {
