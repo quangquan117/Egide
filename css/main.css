@@ -31,6 +31,7 @@ main{
 
 nav{
     font-family: "Anton", sans-serif;
+    position: relative;
     display: flex;
     justify-content: left;
 }

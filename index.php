@@ -21,7 +21,9 @@
     </header>
     <main>
         <nav>
-          <ul>
+          <input type="checkbox" id="burger-toggle">
+          <label for="burger-toggle" class="burger-icon">&#9776;</label>
+          <ul class="burger-menu">
             <li><a href="#">Base</a></li>
             <li><a href="#">Structure</a></li>
             <li><a href="#">Soldat</a></li>
