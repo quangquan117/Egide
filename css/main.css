@@ -34,11 +34,21 @@ nav{
     position: relative;
     display: flex;
     justify-content: left;
+    margin-left: 1rem;
 }
 
 section ul{
     display: grid;
     grid-template-columns: calc(50% - 1rem) calc(50% - 1rem);
+}
+
+section.store{
+    grid-template-columns: calc(33% - 1rem) calc(33% - 1rem) calc(33% - 1rem);
+}
+
+section.store ul{
+    display: grid;
+    grid-template-rows: calc(50% - 1rem) calc(50% - 1rem);
 }
 
 section ul li p{
