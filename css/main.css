@@ -1,0 +1,15 @@
+@import url(reset.css);
+@import url(fonts.css);
+
+header{
+    background-color: var(--color-primary);
+    padding: 1.6rem 0;
+    text-align: center;
+}
+
+h1{
+    color: var(--color-font);
+    font-size: 2.4rem;
+    font-weight: 400;
+    letter-spacing: .2rem;
+}
