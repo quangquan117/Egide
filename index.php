@@ -21,9 +21,6 @@
                 <input type="password" name="password" id="password" required>
             </form>
         </section>
-    </main>
-    <footer>
-        <p>&copy; - MIT - 2024</p>
-    </footer>
-  </body>
-</html>
+<?php
+  require_once __DIR__.'/src/template/footer.inc.php';
+?>
