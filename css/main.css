@@ -36,11 +36,28 @@ nav{
     justify-content: left;
 }
 
+section ul{
+    display: grid;
+    grid-template-columns: calc(50% - 1rem) calc(50% - 1rem);
+}
+
+section ul li p{
+    color: var(--color-font);
+    font-family: "Anton", sans-serif;
+    font-size: 2.4rem;
+    margin: 0;
+    padding: 1rem;
+}
+
 form{
     margin: 5rem;
     width: 100%;
     margin: 0 auto;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 form label{
