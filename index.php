@@ -10,16 +10,18 @@
                 <input type="text" name="pseudo" id="pseudo" required>
                 <label for="password">Mot de passe</label>
                 <input type="password" name="password" id="password" required>
+                <input type="submit">
             </form>
             <!-- sign out -->
             <!-- Pseudo - Email - password -->
-            <form action="#" class="sign_out">
+            <form action="#" class="sign_up">
                 <label for="pseudo">Pseudo</label>
                 <input type="text" name="pseudo" id="pseudo" required>
                 <label for="email">Email</label>
                 <input type="email" name="email" id="email" required>
                 <label for="password">Mot de passe</label>
                 <input type="password" name="password" id="password" required>
+                <input type="submit">
             </form>
         </section>
 <?php

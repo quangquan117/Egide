@@ -25,7 +25,7 @@
         $conn = getConn();
 
         $result = getUser($conn, $username);
-        if ($result->num_rows == 0) {
+        if ($result == null || $result->num_rows == 0) {
             return "User not found";
         }
 
@@ -37,10 +37,10 @@
         }
     }
 
-    function getUser($conn, $username, $email = "") {
+    function getUser($conn, $username) {
         $sql = "SELECT * FROM user WHERE pseudo = ? OR email = ?";
         $db = $conn->prepare($sql);
-        $db->bind_param("ss", $username, $email);
+        $db->bind_param("ss", $username, $username);
         $db->execute();
         return $db->get_result();
     }
