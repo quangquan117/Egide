@@ -1,5 +1,6 @@
 <?php
     include_once "user.php";
+    include_once "config.php";
 
     if (strpos($_SERVER["REQUEST_URI"], "/sign_up") !== false){
 
