@@ -9,7 +9,7 @@
     function newUser($username, $email, $password, $admin = 0) {
         $conn = getConn();
 
-        $result = getUser($conn, $username);
+        $result = getOneUser($conn, $username);
         if ($result->num_rows > 0) {
             return "User already exists";
         }
@@ -19,31 +19,38 @@
         $db = $conn->prepare($sql);
         $db->bind_param("sssi", $username, $email, $hasspass, $admin);
         $db->execute();
-        $token = getToken($username, $password);
-        return $token;
+        //$token = getToken($username, $password);
+        return "User created";
     }
 
     function connUser($username, $password) {
         $conn = getConn();
 
-        $result = getUser($conn, $username);
+        $result = getOneUser($conn, $username);
         if ($result == null || $result->num_rows == 0) {
             return "User not found";
         }
 
         $user = $result->fetch_assoc();
         if (password_verify($password, $user["password"])) {
-            $token = getToken($username, $password);
-            return $token;
+            //$token = getToken($username, $password);
+            return " Connected";
         } else {
             return " Wrong password";
         }
     }
 
-    function getUser($conn, $username, $email = null) {
+    function getOneUser($conn, $username, $email = null) {
         $sql = "SELECT * FROM user WHERE pseudo = ? OR email = ?";
         $db = $conn->prepare($sql);
         $db->bind_param("ss", $username, $email);
         $db->execute();
         return $db->get_result();
+    }
+
+    function getAllUser() {
+        $conn = getConn();
+        $sql = "SELECT * FROM user";
+        $result = $conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }

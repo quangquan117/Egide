@@ -13,7 +13,7 @@ export function link(type_sign, data) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             const data = xhr.response;
             console.log(data);
-            // document.location.href = "http://localhost/projet_final/main_base.php";
+            document.location.href = "http://localhost/projet_final/main_base.php";
         } else {
             const data = xhr.response;
             window.alert(data);

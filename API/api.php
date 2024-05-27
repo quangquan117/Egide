@@ -30,4 +30,9 @@
             echo "Missing parameters";
             http_response_code(400);
         }
+    } else if (strpos($_SERVER["REQUEST_URI"], "/get_user") !== false) {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $resulte = getAllUser();
+        echo json_encode($resulte);
+        http_response_code(200);
     }
