@@ -19,8 +19,8 @@
         $db = $conn->prepare($sql);
         $db->bind_param("sssi", $username, $email, $hasspass, $admin);
         $db->execute();
-        //$token = getToken($username, $password);
-        return "User created";
+        $token = getToken($username, $email, $admin);
+        return $token;
     }
 
     function connUser($username, $password) {
@@ -33,10 +33,10 @@
 
         $user = $result->fetch_assoc();
         if (password_verify($password, $user["password"])) {
-            //$token = getToken($username, $password);
-            return " Connected";
+            $token = getToken($username,$user["email"], $user["admin"]);
+            return $token;
         } else {
-            return " Wrong password";
+            return "Wrong password";
         }
     }
 

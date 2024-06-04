@@ -1,17 +1,16 @@
 import { sign_in, sign_up } from "./form.js";
-import { accordion } from "./accordion.js";
+import {nav_admin} from "./nav_admin.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("App loaded!");
 
-    if (window.location.pathname === "/projet_final/index.php") {
-        // Get the form element
+    if (window.location.pathname === "/projet_final/index.php" ||
+        window.location.pathname === "/projet_final/") {
         sign_in();
         sign_up();
     }
-
-    if (window.location.pathname === "/projet_final/store.php") {
-        console.log("Store page loaded!");
-        // accordion();
+    if (window.location.pathname !== "/projet_final/index.php" ||
+    window.location.pathname !== "/projet_final/") {
+        nav_admin();
     }
 });
