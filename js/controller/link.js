@@ -40,3 +40,22 @@ export function link(type_sign, data) {
         }
     };
 };
+
+export function get_li(type) {
+    return new Promise((resolve, reject) => {
+        console.log(type);
+        const url = "http://localhost/projet_final/API/api.php/get_shop";
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.send(JSON.stringify({ "type_shop": type }));
+        xhr.onload = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                const data = JSON.parse(xhr.response);
+                console.log(data);
+                resolve(data);
+            } else {
+                reject("Erreur lors de la récupération des données");
+            }
+        };
+    });
+}
