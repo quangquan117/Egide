@@ -1,6 +1,6 @@
 import { get_data_from_token } from "./link.js";
 
-export async function nav_admin() {
+export async function nav_admin(admin) {
     let result = await get_data_from_token();
     if (result && result["admin"] == true) {
         console.log("admin");
