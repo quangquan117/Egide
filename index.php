@@ -4,7 +4,6 @@
   require_once __DIR__.'/src/template/nav.inc.php';
 ?>
         <section>
-            <!-- sign in -->
             <form action="#" class="sign_in">
                 <label for="pseudo">Pseudo ou Email</label>
                 <input type="text" name="pseudo" id="pseudo" required>
@@ -12,8 +11,6 @@
                 <input type="password" name="password" id="password" required>
                 <input type="submit">
             </form>
-            <!-- sign out -->
-            <!-- Pseudo - Email - password -->
             <form action="#" class="sign_up">
                 <label for="pseudo">Pseudo</label>
                 <input type="text" name="pseudo" id="pseudo" required>
@@ -21,6 +18,8 @@
                 <input type="email" name="email" id="email" required>
                 <label for="password">Mot de passe</label>
                 <input type="password" name="password" id="password" required>
+                <label for="condition">J'accepte les conditions d'utilisation</label>
+                <input type="checkbox" name="condition" id="condition" required>
                 <input type="submit">
             </form>
         </section>
