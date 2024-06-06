@@ -5,8 +5,6 @@ export async function fill_shop(type){
     const all_li = await get_all_data(type);
     let result = await get_data_from_token();
 
-    console.log(all_li);
-
     if (all_li === "Erreur lors de la récupération des données") {
         const li = document.createElement("li");
         li.innerHTML = "Erreur lors de la récupération des données";
@@ -30,12 +28,21 @@ export async function fill_shop(type){
         li.appendChild(details);
         ul.appendChild(li);
         if (result && result["admin"] == true) {
+            console.log("admin");
             const button_modif = document.createElement("button");
             button_modif.innerHTML = "modifier";
             button_modif.addEventListener("click", () => {
-                document.location.href = "http://localhost/projet_final/modif.php?id=" + all_li[i].ID_Bâtiment + "&type=" + type;
+                document.location.href = "http://localhost/projet_final/modif.php?id=" + all_li[i].ID_Batiment + "&type=" + type;
             });
             details.appendChild(button_modif);
         }
+    }
+    if (result && result["admin"] == true) {
+        const button_add = document.createElement("button");
+        button_add.innerHTML = "ajouter";
+        button_add.addEventListener("click", () => {
+            document.location.href = "http://localhost/projet_final/modif.php?id=0&type=" + type;
+        });
+        ul.appendChild(button_add);
     }
 }

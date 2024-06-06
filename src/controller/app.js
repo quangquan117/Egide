@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     if (window.location.pathname === "/projet_final/modif.php") {
-        const id = window.location.search.split("=")[1].split("&")[0];
+        const id = parseInt(window.location.search.split("=")[1].split("&")[0]);
         const type = window.location.search.split("=")[2];
-        modif_form(id, type);
+        modif_form(type, id);
     }
 });

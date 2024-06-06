@@ -74,3 +74,31 @@ export function get_all_data_from_id(type, id) {
         }
     });
 }
+export function send_data(type, id, data) {
+    return new Promise((resolve, reject) => {
+        let body = {
+            "type_data": type,
+            "data": data
+        };
+        let url = ""
+        console.log(id);
+        if (id == 0) {
+            url = "http://localhost/projet_final/API/api.php/create_data";
+        }
+        else {
+            body["id"] = id;
+            url = "http://localhost/projet_final/API/api.php/update_data";
+        }
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.send(JSON.stringify(body));
+        xhr.onload = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                const data = xhr.response;
+                resolve(data);
+            } else {
+                reject("Erreur lors de l'envoi des données");
+            }
+        }
+    });
+}
