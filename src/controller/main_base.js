@@ -1,7 +1,7 @@
-import { get_all_data } from "./link.js";
+import { get_batiment_from_base } from "./link.js";
 
 export async function print_all_base(){
-    const base = await get_all_data("batiment");
+    const base = await get_batiment_from_base();
     const section = document.querySelector("section");
     for (let i = 0; i < base.length; i++){
         const ul = document.createElement("ul");

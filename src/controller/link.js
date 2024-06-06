@@ -102,3 +102,22 @@ export function send_data(type, id, data) {
         }
     });
 }
+
+export function get_batiment_from_base() {
+    return new Promise((resolve, reject) => {
+        const token = localStorage.getItem("token");
+        const url = "http://localhost/projet_final/API/api.php/get_data_of_base";
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify({ "token": token }));
+        xhr.onload = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                const data = JSON.parse(xhr.response);
+                resolve(JSON.parse(data));
+            } else {
+                reject("Erreur lors de la récupération des données");
+            }
+        }
+    });
+}
