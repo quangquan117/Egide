@@ -144,6 +144,31 @@ form input{
     width: calc(100% - 4rem);
 }
 
+form select {
+    background-color: var(--color-primary);
+    border: 0.2rem solid var(--color-font);
+    color: var(--color-font);
+    font-size: 2.5rem;
+    margin: 1rem 2rem;
+    padding: 0.5rem;
+    font-family: "Anton", sans-serif;
+    width: calc(100% - 4rem);
+}
+
+form option {
+    background-color: var(--color-primary);
+    color: var(--color-font);
+    font-size: 2.5rem;
+    font-family: "Anton", sans-serif;
+}
+
+form input[type="checkbox"] {
+    width: 2rem;
+    height: 2rem;
+    margin: 1rem;
+    accent-color: var(--color-font);
+}
+
 footer{
     background-color: var(--color-primary);
     color: var(--color-font);

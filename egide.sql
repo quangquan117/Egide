@@ -20,7 +20,7 @@ CREATE TABLE batiment (
     point_de_vie NUMERIC,
     defense NUMERIC,
     prix NUMERIC,
-    image VARCHAR(255)
+    description VARCHAR(255)
 );
 
 CREATE TABLE type_soldat (
@@ -32,7 +32,7 @@ CREATE TABLE type_soldat (
     bonus_vs_blinder FLOAT,
     bonus_vs_aeriens FLOAT,
     prix NUMERIC,
-    image VARCHAR(255),
+    description VARCHAR(255),
     ID_Batiment_FK INT,
     FOREIGN KEY (ID_Batiment_FK) REFERENCES batiment(ID_Batiment)
 );
