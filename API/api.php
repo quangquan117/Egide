@@ -3,6 +3,7 @@
     include_once "data.php";
     include_once "config.php";
     include_once "token.php";
+    include_once "base.php";
 
     $request_uri = $_SERVER["REQUEST_URI"];
     if (strpos($request_uri, "/sign_up") !== false){
@@ -64,8 +65,11 @@
         $data = json_decode(file_get_contents("php://input"), true);
         echo create_data($data["type_data"], $data["data"]);
         http_response_code(200);
-    }
-    else {
+    } else if (strpos($request_uri, "/get_data_of_base") !== false){
+        $data = json_decode(file_get_contents("php://input"), true);
+        echo json_encode(get_data_of_base($data["token"]));
+        http_response_code(200);
+    } else {
         echo "Not found";
         http_response_code(404);
     }

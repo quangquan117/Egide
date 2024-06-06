@@ -1,6 +1,7 @@
 <?php
     include_once "conn.php";
     include_once "token.php";
+    include_once "base.php";
 
     function hassPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);
@@ -9,7 +10,7 @@
     function newUser($username, $email, $password, $admin = 0) {
         $conn = getConn();
 
-        $result = getOneUser($conn, $username);
+        $result = getOneUser($conn, email:$email);
         if ($result->num_rows > 0) {
             return "User already exists";
         }
@@ -19,7 +20,10 @@
         $db = $conn->prepare($sql);
         $db->bind_param("sssi", $username, $email, $hasspass, $admin);
         $db->execute();
-        $token = getToken($username, $email, $admin);
+    
+        $result = getOneUser($conn, email:$email);
+        $id = $result->fetch_assoc()["ID_User"];
+        $token = getToken($username, $email, $admin, create_base($id));
         return $token;
     }
 
@@ -33,14 +37,14 @@
 
         $user = $result->fetch_assoc();
         if (password_verify($password, $user["password"])) {
-            $token = getToken($username,$user["email"], $user["admin"]);
+            $token = getToken($username, $user["email"], $user["admin"], get_base_id($user["ID_User"]));
             return $token;
         } else {
             return "Wrong password";
         }
     }
 
-    function getOneUser($conn, $username, $email = null) {
+    function getOneUser($conn, $username = null, $email = null) {
         $sql = "SELECT * FROM user WHERE pseudo = ? OR email = ?";
         $db = $conn->prepare($sql);
         $db->bind_param("ss", $username, $email);

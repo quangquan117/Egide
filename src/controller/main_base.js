@@ -12,7 +12,6 @@ export async function print_all_base(){
         h2.textContent = base[i].nom;
         p.textContent = base[i].description;
 
-        
         section.appendChild(ul);
         ul.appendChild(h2);
         ul.appendChild(li);

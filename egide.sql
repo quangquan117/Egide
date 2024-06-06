@@ -1,47 +1,72 @@
-CREATE TABLE USER (
-	ID_user int PRIMARY KEY,
-	email VARCHAR(255),
-	pseudo VARCHAR(255),
-	password VARCHAR(255),
-	admin BIT(1)
-)
+CREATE TABLE user (
+    ID_User INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL,
+    pseudo VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    admin BOOLEAN NOT NULL
+);
 
-CREATE TABLE MESSAGE (
-	ID_message int PRIMARY KEY,
-	ID_user_get int,
-	ID_user_send int,
-	Text VARCHAR(255)
-)
+CREATE TABLE base (
+    ID_Base INT PRIMARY KEY AUTO_INCREMENT,
+    ID_User_FK INT,
+    resource NUMERIC,
+    FOREIGN KEY (ID_User_FK) REFERENCES user(ID_User)
+);
 
-CREATE TABLE BASE(
-	ID_base int PRIMARY KEY,
-	ID_user_FK int,
-	Ressource FLOAT
-)
+CREATE TABLE batiment (
+    ID_Batiment INT PRIMARY KEY AUTO_INCREMENT,
+	nom VARCHAR(255),
+    ressource_par_minute NUMERIC,
+    point_de_vie NUMERIC,
+    defense NUMERIC,
+    prix NUMERIC,
+    image VARCHAR(255)
+);
 
-CREATE TABLE CONSTUIRE (
-	ID_base_FK int PRIMARY key,
-	ID_Batiment_FK int
-)
+CREATE TABLE type_soldat (
+    ID_Soldat INT PRIMARY KEY AUTO_INCREMENT,
+	nom VARCHAR(255),
+    point_de_vie NUMERIC,
+    attaque NUMERIC,
+    bonus_vs_infanterie FLOAT,
+    bonus_vs_blinder FLOAT,
+    bonus_vs_aeriens FLOAT,
+    prix NUMERIC,
+    image VARCHAR(255),
+    ID_Batiment_FK INT,
+    FOREIGN KEY (ID_Batiment_FK) REFERENCES batiment(ID_Batiment)
+);
 
-CREATE TABLE BATIMENT (
-	ID_batiment int PRIMARY KEY,
-	Ressource_par_minute int,
-	Point_de_vie int,
-	Defense int
-)
+CREATE TABLE soldat (
+    ID_Soldat INT PRIMARY KEY AUTO_INCREMENT,
+    nb_soldat NUMERIC,
+    type_soldat INT,
+    ID_Base_FK INT,
+    FOREIGN KEY (ID_Base_FK) REFERENCES base(ID_Base)
+);
 
-CREATE TABLE SOLDAT (
-	ID_Soldat int PRIMARY KEY,
-	Point_de_vie int,
-	Attaque int,
-	Bonus_infanterie int,
-	Bonus_blinder int,
-	Bonus_airiens int,
-	ID_batiment int
-)
+CREATE TABLE evenement (
+    ID_Evenement INT PRIMARY KEY AUTO_INCREMENT,
+    titre VARCHAR(255),
+    description VARCHAR(255),
+    choix_facile VARCHAR(255),
+    choix_difficile VARCHAR(255)
+);
 
-CREATE TABLE POSSEDE (
-	ID_base_fk int PRIMARY KEY,
-	ID_soldat_fk int
-)
+CREATE TABLE message (
+    ID_Message INT PRIMARY KEY AUTO_INCREMENT,
+    ID_User_get INT,
+    ID_User_send INT,
+    text VARCHAR(255),
+    FOREIGN KEY (ID_User_get) REFERENCES user(ID_User),
+    FOREIGN KEY (ID_User_send) REFERENCES user(ID_User)
+);
+
+CREATE TABLE construire (
+    ID_Base_FK INT,
+    ID_Batiment_FK INT,
+    nb_batiment NUMERIC,
+    PRIMARY KEY (ID_Base_FK, ID_Batiment_FK),
+    FOREIGN KEY (ID_Base_FK) REFERENCES base(ID_Base),
+    FOREIGN KEY (ID_Batiment_FK) REFERENCES batiment(ID_Batiment)
+);

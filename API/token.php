@@ -3,14 +3,15 @@
     include_once "config.php";
     use Firebase\JWT\JWT;
     
-    Function getToken($username, $email, $admin) {
+    Function getToken($username, $email, $admin, $id) {
         $_SECRET_KEY = SECRET_KEY;
         $data = array(
             // 'iat' => time(),
             // 'exp' => strtotime("+8 hour"),
             "username" => $username,
             "email" => $email,
-            "admin" => ($admin == 1 ? true : false)
+            "admin" => ($admin == 1 ? true : false),
+            "id_base" => $id
         );
         $encode = JWT::encode($data, $_SECRET_KEY, 'HS256');
         return $encode;
