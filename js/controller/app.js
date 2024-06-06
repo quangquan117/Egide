@@ -2,6 +2,7 @@ import { sign_in, sign_up } from "./form.js";
 import { modif_form } from "./modif_form.js";
 import { nav_admin } from "./nav_admin.js";
 import { fill_shop } from "./shop.js";
+import { print_all_base } from "./main_base.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     if (window.location.pathname === "/projet_final/index.php" || window.location.pathname === "/projet_final/") {
@@ -10,6 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (window.location.pathname !== "/projet_final/index.php" || window.location.pathname !== "/projet_final/") {
         nav_admin();
+    }
+    if (window.location.pathname === "/projet_final/main_base.php") {
+        print_all_base();
     }
     if (window.location.pathname === "/projet_final/store.php") {
         if (window.location.search === "?type=batiment") {
