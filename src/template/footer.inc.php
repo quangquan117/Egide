@@ -1,6 +1,6 @@
     </main>
     <footer>
-        <p>&copy; - MIT - 2024</p>
+        <p>&copy; - LL - 2024</p>
     </footer>
     <script type="module" src="./js/controller/app.js"></script>
   </body>

@@ -18,7 +18,7 @@
                 <input type="email" name="email" id="email" required>
                 <label for="password">Mot de passe</label>
                 <input type="password" name="password" id="password" required>
-                <label for="condition">J'accepte les conditions d'utilisation</label>
+                <label for="condition">J'accepte les <a href="./Conditions_d-utilisation.php" target="_blank">conditions d'utilisation</a></label>
                 <input type="checkbox" name="condition" id="condition" required>
                 <input type="submit">
             </form>

@@ -1,15 +1,43 @@
 import { get_all_data, get_all_data_from_id } from "./link.js";
 import { send_data } from "./link.js";
 
+function get_data_to_send(type, inputs, select) {
+    if (type === "batiment") {
+        var dataToSend = {
+            "nom": inputs[0].value,
+            "ressource_par_minute": inputs[1].value,
+            "point_de_vie": inputs[2].value,
+            "defense": inputs[3].value,
+            "prix": inputs[4].value,
+            "description": inputs[5].value
+        };
+    }
+    else if (type === "type_soldat") {
+        var dataToSend = {
+            "nom": inputs[0].value,
+            "point_de_vie": inputs[1].value,
+            "attaque": inputs[2].value,
+            "bonus_vs_infanterie": inputs[3].value,
+            "bonus_vs_blinder": inputs[4].value,
+            "bonus_vs_aeriens": inputs[5].value,
+            "prix": inputs[6].value,
+            "description": inputs[7].value,
+            "batiment_lier": select.value
+        };
+    }
+    return dataToSend;
+}
+
 export async function modif_form(type, id = 0) {
     let data = [];
     if (id != 0) {
         if (type === "batiment") {
             data = await get_all_data_from_id(type, id);
+            console.log(data);
         }
     }
     const form = document.querySelector(".modification");
-    form.innerHTML = ''; // Clear the form content before adding new elements
+    form.innerHTML = '';
 
     const name_label = document.createElement("label");
     const name_input = document.createElement("input");
@@ -141,24 +169,21 @@ export async function modif_form(type, id = 0) {
     send_button.addEventListener("click", async (e) => {
         e.preventDefault();
         const inputs = form.querySelectorAll("input");
-        const dataToSend = {
-            "nom": inputs[0].value,
-            "ressource_par_minute": inputs[1].value,
-            "point_de_vie": inputs[2].value,
-            "defense": inputs[3].value,
-            "prix": inputs[4].value,
-            "description": inputs[5].value
-        };
+        if (type === "type_soldat") {
+            var select = form.querySelector("select");
+        }
+        const dataToSend = get_data_to_send(type, inputs, select)
         if (id != 0) {
             dataToSend["id"] = id;
         }
+        console.log(dataToSend);
         try {
             const response = await send_data(type, id, dataToSend);
             if (response === "Erreur lors de la création") {
                 window.alert("Erreur lors de la création");
             } else {
                 window.alert("sauvegarde effectuée");
-                document.location.href = "http://localhost/projet_final/main_base.php";
+                document.location.href = "http://localhost/projet_final/store.php?type=" + type;
             }
         } catch (error) {
             console.error("Erreur lors de l'envoi des données :", error);

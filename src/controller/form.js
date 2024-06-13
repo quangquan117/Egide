@@ -6,7 +6,15 @@ export function sign_in() {
         event.preventDefault();
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
-        console.log(data);
+        for (const key in data) {
+            data[key] = data[key].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+        const email = data.email;
+        const emailRegex = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
+        if (!emailRegex.test(email)) {
+            alert("Email invalide");
+            return;
+        }
         link("sign_in", data);
     });
 }
@@ -17,7 +25,15 @@ export function sign_up() {
         event.preventDefault();
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
-        console.log(data);
+        for (const key in data) {
+            data[key] = data[key].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+        const email = data.email;
+        const emailRegex = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
+        if (!emailRegex.test(email)) {
+            alert("Email invalide");
+            return;
+        }
         link("sign_up", data);
     });
 }

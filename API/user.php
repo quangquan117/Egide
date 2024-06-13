@@ -4,7 +4,7 @@
     include_once "base.php";
 
     function hassPassword($password) {
-        return password_hash($password, PASSWORD_DEFAULT);
+        return password_hash($password, PASSWORD_BCRYPT);
     }
 
     function newUser($username, $email, $password, $admin = 0) {

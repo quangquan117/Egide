@@ -6,7 +6,7 @@
     include_once "base.php";
 
     $request_uri = $_SERVER["REQUEST_URI"];
-    if (strpos($request_uri, "/sign_up") !== false){
+    if (strpos($request_uri, "/sign_up") !== false) {
 
         $data = json_decode(file_get_contents("php://input"), true);
 
@@ -22,12 +22,12 @@
         $data = json_decode(file_get_contents("php://input"), true);
         
         if (isset($data["username"]) && isset($data["password"])) {
-            $resulte = connUser($data["username"], $data["password"]);
-            if ($resulte != "Wrong password") {
-                echo $resulte;
+            $result = connUser($data["username"], $data["password"]);
+            if ($result != "Wrong password") {
+                echo $result;
                 http_response_code(200);
             } else {
-                echo $resulte;
+                echo $result;
                 http_response_code(201);
             }
         } else {
@@ -37,9 +37,9 @@
     } else if (strpos($request_uri, "/get_data_from_token") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
         if (isset($data["token"])) {
-            $resulte = verifyToken($data["token"]);
-            if ($resulte != null) {
-                echo json_encode($resulte);
+            $result = verifyToken($data["token"]);
+            if ($result != null) {
+                echo json_encode($result);
                 http_response_code(200);
             } else {
                 echo "Invalid token";
@@ -49,13 +49,13 @@
             echo "Missing parameters";
             http_response_code(400);
         }
-    } else if (strpos($request_uri, "/get_all_data") !== false) {
-        $data = json_decode(file_get_contents("php://input"), true);
-        echo json_encode(get_data($data["type_data"]));
-        http_response_code(200);
     } else if (strpos($request_uri, "/get_all_data_from_id") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
         echo json_encode(get_data_from_id($data["type_data"], $data["id"]));
+        http_response_code(200);
+    } else if (strpos($request_uri, "/get_all_data") !== false) {
+        $data = json_decode(file_get_contents("php://input"), true);
+        echo json_encode(get_data($data["type_data"]));
         http_response_code(200);
     } else if (strpos($request_uri, "/update_data") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
@@ -63,9 +63,23 @@
         http_response_code(200);
     } else if (strpos($request_uri, "/create_data") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
-        echo create_data($data["type_data"], $data["data"]);
-        http_response_code(200);
-    } else if (strpos($request_uri, "/get_data_of_base") !== false){
+        if ($data["data"] != null) {
+            echo create_data($data["type_data"], $data["data"]);
+            http_response_code(200);
+        }
+        else {
+            echo "Missing parameters";
+            http_response_code(400);
+        }
+    } else if (strpos($request_uri, "/delete_data") !== false) {
+        $data = json_decode(file_get_contents("php://input"), true);
+        echo $data["type_data"];
+        echo delete_data($data["type_data"], $data["id"]);
+    } else if (strpos($request_uri, "/buy_something") !== false) {
+        $data = json_decode(file_get_contents("php://input"), true);
+        echo buy_something($data["type"], $data["id"], $data["token"]);
+        html_entity_decode(200);
+    } else if (strpos($request_uri, "/get_data_of_base") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
         echo json_encode(get_data_of_base($data["token"]));
         http_response_code(200);
