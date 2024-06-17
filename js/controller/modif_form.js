@@ -32,7 +32,6 @@ export async function modif_form(type, id = 0) {
     if (id != 0) {
         if (type === "batiment") {
             data = await get_all_data_from_id(type, id);
-            console.log(data);
         }
     }
     const form = document.querySelector(".modification");
@@ -174,7 +173,6 @@ export async function modif_form(type, id = 0) {
         if (id != 0) {
             dataToSend["id"] = id;
         }
-        console.log(dataToSend);
         try {
             const response = await send_data(type, id, dataToSend);
             if (response === "Erreur lors de la création") {

@@ -41,7 +41,6 @@ export function link(type_sign, data) {
 };
 export function get_all_data(type) {
     return new Promise((resolve, reject) => {
-        console.log(type);
         const url = "http://localhost/projet_final/API/api.php/get_all_data";
         const xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
@@ -79,7 +78,6 @@ export function send_data(type, id, data) {
             "data": data
         };
         let url = "";
-        console.log(id);
         if (id == 0) {
             url = "http://localhost/projet_final/API/api.php/create_data";
         } else {

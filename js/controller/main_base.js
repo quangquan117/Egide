@@ -20,7 +20,6 @@ export async function print_all_base() {
         if (i == 0) {
             const ressource = document.createElement("p");
             const button = document.createElement("button");
-            console.log(base[i].ressource);
             ressource.textContent = "ressource : " + ressource_of_base;
             button.textContent = "obtenir ressource";
             li.appendChild(ressource);
