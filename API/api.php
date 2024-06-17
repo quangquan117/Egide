@@ -24,7 +24,6 @@
         $data = json_decode(file_get_contents("php://input"), true);
         
         if (isset($data["username"]) && isset($data["password"])) {
-            // $result = connUser($data["username"], $data["password"]);
             $user = new user();
             $result = $user->connUser($data);
             if ($result != "Wrong password") {

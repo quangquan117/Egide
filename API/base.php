@@ -51,7 +51,7 @@
         }
 
         $id_base = $data_token->id_base;
-        $result = $data_base->get_data_from_id("construire", "ID_Base_FK", $id_base);
+        $result = $data_base->get_data_from_id("construire", "Base_FK", $id_base);
         $batiment_base = array();
         foreach ($result as $row) {
             $batiment_base[] = $row;
