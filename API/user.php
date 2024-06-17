@@ -3,58 +3,46 @@
     include_once "token.php";
     include_once "base.php";
 
+class user {
+    private $Data_base;
+    public function __construct() {
+        $this->Data_base = new Data_base();
+    }
     function hassPassword($password) {
         return password_hash($password, PASSWORD_BCRYPT);
     }
-
-    function newUser($username, $email, $password, $admin = 0) {
-        $conn = getConn();
-
-        $result = getOneUser($conn, email:$email);
-        if ($result->num_rows > 0) {
+    function newUser($data) {
+        $email = $data["email"];
+        $pseudo = $data["username"];
+        $password = $this->hassPassword($data["password"]);
+        $user = $this->Data_base->find_user($data["email"]);
+        if ($user != null) {
             return "User already exists";
         }
-
-        $hasspass = hassPassword($password);
-        $sql = "INSERT INTO user (pseudo, email, password, admin) VALUES (?, ?, ?, ?)";
-        $db = $conn->prepare($sql);
-        $db->bind_param("sssi", $username, $email, $hasspass, $admin);
-        $db->execute();
-    
-        $result = getOneUser($conn, email:$email);
-        $id = $result->fetch_assoc()["ID_User"];
-        $token = getToken($username, $email, $admin, create_base($id));
-        return $token;
+        if ($this->Data_base->create_data("user", ["pseudo" => $pseudo, "email" => $email, "password" => $password, "admin" => 0])) {
+            $user = $this->Data_base->find_user($data["email"]);
+            $id = $user[0]["ID_User"];
+            $token = getToken($pseudo, $email, 0, create_base($id));
+            return $token;
+        }
+        return "Create user failed";
     }
 
-    function connUser($username, $password) {
-        $conn = getConn();
-
-        $result = getOneUser($conn, $username);
-        if ($result == null || $result->num_rows == 0) {
+    function connUser($data) {
+        $user = $this->Data_base->find_user($data["username"]);
+        if ($user == null) {
             return "User not found";
         }
-
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user["password"])) {
-            $token = getToken($username, $user["email"], $user["admin"], get_base_id($user["ID_User"]));
+        if (password_verify($data["password"], $user[0]["password"])) {
+            $token = getToken($data["username"], $user[0]["email"], $user[0]["admin"], get_base_id($user[0]["ID_User"]));
             return $token;
         } else {
             return "Wrong password";
         }
     }
 
-    function getOneUser($conn, $username = null, $email = null) {
-        $sql = "SELECT * FROM user WHERE pseudo = ? OR email = ?";
-        $db = $conn->prepare($sql);
-        $db->bind_param("ss", $username, $email);
-        $db->execute();
-        return $db->get_result();
+    function delete_user($id) {
+        $this->Data_base->delete_data("user", $id);
+        return "Delete done";
     }
-
-    function getAllUser() {
-        $conn = getConn();
-        $sql = "SELECT * FROM user";
-        $result = $conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
+}

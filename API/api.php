@@ -11,7 +11,9 @@
         $data = json_decode(file_get_contents("php://input"), true);
 
         if (isset($data["username"]) && isset($data["email"]) && isset($data["password"])) {
-            echo newUser($data["username"], $data["email"], $data["password"]);
+            // echo newUser($data["username"], $data["email"], $data["password"]);
+            $newuser = new user();
+            echo $newuser->newUser($data);
             http_response_code(200);
         } else {
             echo "Missing parameters";
@@ -22,7 +24,9 @@
         $data = json_decode(file_get_contents("php://input"), true);
         
         if (isset($data["username"]) && isset($data["password"])) {
-            $result = connUser($data["username"], $data["password"]);
+            // $result = connUser($data["username"], $data["password"]);
+            $user = new user();
+            $result = $user->connUser($data);
             if ($result != "Wrong password") {
                 echo $result;
                 http_response_code(200);
@@ -51,20 +55,28 @@
         }
     } else if (strpos($request_uri, "/get_all_data_from_id") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
-        echo json_encode(get_data_from_id($data["type_data"], $data["id"]));
+        // echo json_encode(get_data_from_id($data["type_data"], $data["id"]));
+        $data_base = new Data_base();
+        echo json_encode($data_base->get_data_from_id($data["type_data"], $data["type_data"], $data["id"]));
         http_response_code(200);
     } else if (strpos($request_uri, "/get_all_data") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
-        echo json_encode(get_data($data["type_data"]));
+        // echo json_encode(get_data($data["type_data"]));
+        $data_base = new Data_base();
+        echo json_encode($data_base->get_data($data["type_data"]));
         http_response_code(200);
     } else if (strpos($request_uri, "/update_data") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
-        echo update_data($data["type_data"], $data["id"], $data["data"]);
+        // echo update_data($data["type_data"], $data["id"], $data["data"]);
+        $data_base = new Data_base();
+        echo $data_base->update_data($data["type_data"], $data["id"], $data["data"]);
         http_response_code(200);
     } else if (strpos($request_uri, "/create_data") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
         if ($data["data"] != null) {
-            echo create_data($data["type_data"], $data["data"]);
+            // echo create_data($data["type_data"], $data["data"]);
+            $data_base = new Data_base();
+            echo $data_base->create_data($data["type_data"], $data["data"]);
             http_response_code(200);
         }
         else {
@@ -73,8 +85,9 @@
         }
     } else if (strpos($request_uri, "/delete_data") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
-        echo $data["type_data"];
-        echo delete_data($data["type_data"], $data["id"]);
+        // echo delete_data($data["type_data"], $data["id"]);
+        $data_base = new Data_base();
+        echo $data_base->delete_data($data["type_data"], $data["id"]);
     } else if (strpos($request_uri, "/buy_something") !== false) {
         $data = json_decode(file_get_contents("php://input"), true);
         echo buy_something($data["type"], $data["id"], $data["token"]);

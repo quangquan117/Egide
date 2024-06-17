@@ -1,11 +1,5 @@
 <?php
     include_once ("token.php");
-// CREATE TABLE base (
-//     ID_Base INT PRIMARY KEY AUTO_INCREMENT,
-//     ID_User_FK INT,
-//     resource NUMERIC,
-//     FOREIGN KEY (ID_User_FK) REFERENCES user(ID_User)
-// );
 
     function get_QG(){
         $conn = getConn();
@@ -49,32 +43,59 @@
         return $id_base;
     }
 
-    function get_data_of_base($token){
+    function get_data_of_base($token) {
+        $data_base = new Data_base();
         $data_token = verifyToken($token);
         if ($data_token == null) {
             return "Invalid token";
         }
-        $id_base = $data_token->id_base;
 
-        $conn = getConn();
-        $sql = "SELECT * FROM construire WHERE ID_Base_FK = ?";
-        $db = $conn->prepare($sql);
-        $db->bind_param("i", $id_base);
-        $db->execute();
-        $result = $db->get_result();
+        $id_base = $data_token->id_base;
+        $result = $data_base->get_data_from_id("construire", "ID_Base_FK", $id_base);
         $batiment_base = array();
-        while ($row = $result->fetch_assoc()) {
+        foreach ($result as $row) {
             $batiment_base[] = $row;
         }
-        
+
         $batiment = array();
         foreach ($batiment_base as $bat) {
-            $sql = "SELECT * FROM batiment WHERE ID_Batiment = ?";
-            $db = $conn->prepare($sql);
-            $db->bind_param("i", $bat["ID_Batiment_FK"]);
-            $db->execute();
-            $result = $db->get_result();
-            $batiment[] = $result->fetch_assoc();
+            $result = $data_base->get_data_from_id("batiment", "Batiment", $bat["ID_Batiment_FK"]);
+            $batiment[] = $result[0];
         }
         return json_encode($batiment);
+    }
+
+    function buy_something($type, $id, $token) {
+        $data_base = new Data_base();
+        $data_token = verifyToken($token);
+        if ($data_token == null) {
+            return "Invalid token";
+        }
+
+        $base = $data_base->get_data_from_id("base", "Base", $data_token->id_base)[0];
+
+        $batiment = $data_base->get_data_from_id("batiment", "Batiment", $id)[0];
+        if ($batiment == null) {
+            return "Invalid batiment";
+        }
+        if ((int)$base["ressource"] < (int)$batiment["prix"]) {
+            return "Not enough ressource";
+        }
+        $new_ressource = (int) $base["ressource"] -= (int) $batiment["prix"];
+        $base["ressource"] = $new_ressource;
+
+        $data_base->update_data("base", $data_token->id_base, $base);
+        $contruire = $data_base->get_data_from_id("construire", "Base_FK", $data_token->id_base);
+        for ($i = 0; $i < count($contruire); $i++) {
+            if ($contruire[$i]["ID_Batiment_FK"] == $id) {
+                $contruire[$i]["nb_batiment"] += 1;
+                if ($data_base->update_contruire($data_token->id_base, $id, $contruire[$i]["nb_batiment"]) == "Update done") {
+                    return "Buy done";
+                } else {
+                    return "Update failed";
+                }
+            }
+        }
+        $data_base->create_data("construire", ["ID_Base_FK" => $data_token->id_base, "ID_Batiment_FK" => $id, "nb_batiment" => 1]);
+        return "Buy done";
     }
