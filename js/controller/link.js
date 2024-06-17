@@ -29,10 +29,11 @@ export function link(type_sign, data) {
     xhr.open("POST", url + type_sign, true);
     xhr.send(body);
     xhr.onload = () => {
+        console.log(xhr.status);
         if (xhr.readyState == 4 && xhr.status == 200) {
             const data = xhr.response;
             localStorage.setItem("token", data);
-            document.location.href = "http://localhost/projet_final/main_base.php";
+            // document.location.href = "http://localhost/projet_final/main_base.php";
         } else {
             const data = xhr.response;
             window.alert(data);

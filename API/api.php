@@ -26,12 +26,12 @@
         if (isset($data["username"]) && isset($data["password"])) {
             $user = new user();
             $result = $user->connUser($data);
-            if ($result != "Wrong password") {
+            if ($result != "Wrong password" && $result != "User not found") {
                 echo $result;
                 http_response_code(200);
             } else {
                 echo $result;
-                http_response_code(201);
+                http_response_code(202);
             }
         } else {
             echo "Missing parameters";

@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sign_in();
         sign_up();
     }
-    if (window.location.pathname !== "/projet_final/index.php" || window.location.pathname !== "/projet_final/") {
+    if (window.location.pathname != "/projet_final/index.php" || window.location.pathname != "/projet_final/") {
         nav_admin();
     }
     if (window.location.pathname === "/projet_final/main_base.php") {

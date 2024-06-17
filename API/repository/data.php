@@ -51,17 +51,20 @@ class Data_base {
             if ($where == "batiment") {
                 $stmt = $this->conn->prepare("INSERT INTO ".$where." (ressource_par_minute, point_de_vie, defense, prix, description, nom) VALUES (?, ?, ?, ?, ?, ?)");
                 $stmt->bind_param("iiiiss", $data["ressource_par_minute"], $data["point_de_vie"], $data["defense"], $data["prix"], $data["description"], $data["nom"]);
+                $stmt->execute();
             } else if ($where == "type_soldat") {
                 $stmt = $this->conn->prepare("INSERT INTO ".$where." (point_de_vie, attaque, bonus_vs_infanterie, bonus_vs_blinder, bonus_vs_aeriens, prix, description, ID_Batiment_FK, nom) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 $stmt->bind_param("iddddisis", $data["point_de_vie"], $data["attaque"], $data["bonus_vs_infanterie"], $data["bonus_vs_blinder"], $data["bonus_vs_aeriens"], $data["prix"], $data["description"], $data["batiment_lier"], $data["nom"]);
+                $stmt->execute();
             } else if ($where == "user") {
                 $stmt = $this->conn->prepare("INSERT INTO ".$where." (pseudo, email, password, admin) VALUES (?, ?, ?, ?)");
                 $stmt->bind_param("sssi", $data["pseudo"], $data["email"], $data["password"], $data["admin"]);
+                $stmt->execute();
             } else if ($where == "construire") {
                 $stmt = $this->conn->prepare("INSERT INTO ".$where." (ID_Base_FK, ID_Batiment_FK, nb_batiment) VALUES (?, ?, ?)");
                 $stmt->bind_param("iii", $data["ID_Base_FK"], $data["ID_Batiment_FK"], $data["nb_batiment"]);
+                $stmt->execute();
             }
-            $stmt->execute();
             return true;
         } catch (Exception $e) {
             return false;
