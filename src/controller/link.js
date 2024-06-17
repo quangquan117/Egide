@@ -158,6 +158,44 @@ export function buy_somthing(type, id) {
         }
     });
 }
+export function get_ressource() {
+    return new Promise((resolve, reject) => {
+        const token = localStorage.getItem("token");
+        const url = "http://localhost/projet_final/API/api.php/get_ressource";
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify({ "token": token }));
+        xhr.onload = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                const data = xhr.response;
+                resolve(data);
+            } else {
+                reject("Erreur lors de la récupération des ressources");
+            }
+        }
+    });
+
+}
+export function put_ressource() {
+    return new Promise((resolve, reject) => {
+        const token = localStorage.getItem("token");
+        const url = "http://localhost/projet_final/API/api.php/put_ressource";
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify({ "token": token }));
+        xhr.onload = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                const data = xhr.response;
+                resolve(data);
+            } else {
+                reject("Erreur lors de la récupération des ressources");
+            }
+        }
+    });
+
+}
 
 export function get_api_gpt(description, type, retryCount = 3, delay = 5000) {
     const apiKey = '';

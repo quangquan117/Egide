@@ -95,6 +95,17 @@
         $data = json_decode(file_get_contents("php://input"), true);
         echo json_encode(get_data_of_base($data["token"]));
         http_response_code(200);
+    } else if (strpos($request_uri, "/get_ressource") !== false) {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $data_token = verifyToken($data["token"]);
+        $data_base = new Data_base();
+        $base = $data_base->get_data_from_id("base", "Base", $data_token->id_base)[0];
+        echo json_encode($base["ressource"]);
+        http_response_code(200);
+    } else if (strpos($request_uri, "/put_ressource") !== false) {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $data_token = verifyToken($data["token"]);
+        update_ressource($data_token->id_base);
     } else {
         echo "Not found";
         http_response_code(404);

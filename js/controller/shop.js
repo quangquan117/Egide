@@ -10,16 +10,16 @@ export async function fill_shop(type) {
         li.innerHTML = "Erreur lors de la récupération des données";
         ul.appendChild(li);
     }
-
-    for (let i = 0; i < all_li.length; i++) {
+    for (let i = result["admin"] == true ? 0 : 1; i < all_li.length; i++) {
         const li = document.createElement("li");
         const details = document.createElement("details");
         const summary = document.createElement("summary");
         const div = document.createElement("div");
         const button_achat = document.createElement("button");
 
-        summary.innerHTML = all_li[i].nom + "<br>" + all_li[i].description;
+        summary.innerHTML = all_li[i].nom;
         div.innerHTML = all_li[i].description;
+        div.innerHTML += "<br>cout : " + all_li[i].prix;
         button_achat.innerHTML = "achat";
 
         details.appendChild(summary);
@@ -30,7 +30,8 @@ export async function fill_shop(type) {
         button_achat.addEventListener("click", () => {
             if (type == "type_soldat") var id = all_li[i].ID_Soldat;else if (type == "batiment") var id = all_li[i].ID_Batiment;
             buy_somthing(type, id);
-            // document.location.href = "http://localhost/projet_final/main_base.php";
+            alert("achat effectué");
+            document.location.href = "http://localhost/projet_final/main_base.php";
         });
         if (result && result["admin"] == true) {
             const button_modif = document.createElement("button");

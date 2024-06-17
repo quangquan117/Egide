@@ -99,3 +99,21 @@
         $data_base->create_data("construire", ["ID_Base_FK" => $data_token->id_base, "ID_Batiment_FK" => $id, "nb_batiment" => 1]);
         return "Buy done";
     }
+
+    function update_ressource($id_base) {
+        $data_base = new Data_base();
+        $base = $data_base->get_data_from_id("base", "Base", $id_base)[0];
+        $date_click = $base["Date_clic_ressource"];
+        $date_now = date("Y-m-d H:i:s");
+        $diff = strtotime($date_now) - strtotime($date_click);
+        $ressource = 0;
+        $contruire = $data_base->get_data_from_id("construire", "Base_FK", $id_base);
+        foreach ($contruire as $bat) {
+            $batiment = $data_base->get_data_from_id("batiment", "Batiment", $bat["ID_Batiment_FK"])[0];
+            $ressource += $bat["nb_batiment"] * $batiment["ressource_par_minute"];
+        }
+        $ressource *= $diff / 60;
+        $base["ressource"] += $ressource;
+        echo $base["ressource"];
+        $data_base->update_data("base", $id_base, $base);
+    }
